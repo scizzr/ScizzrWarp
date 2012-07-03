@@ -2,6 +2,7 @@ Changelog for anyone bored enough to open my jar. :-)
 
 1.2.5-R4_b1
   CB 1.2.5 R4
+  Fixed error submissions. (GET string in URL was too long; using POST now)
 
 1.2.5-R2_b2
   Fixed connection error. (was using localhost)
