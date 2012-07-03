@@ -1,0 +1,28 @@
+Changelog for anyone bored enough to open my jar. :-)
+
+1.2.5-R4_b1
+  CB 1.2.5 R4
+
+1.2.5-R2_b2
+  Fixed connection error. (was using localhost)
+
+1.2.5-R2_b1
+  CB 1.2.5 R2
+  Implemented UUID in stats to distinguish between servers if they rename or change IP address.
+  Added an auto-updater. (optional) Updates require a manual reload or restart.
+  Error stacks will be sent to my website for further inspection. (optional)
+    Using Base64 encoding; PHP sometimes fails without it.
+
+1.2.5-R1_b3
+  Economy support
+  Command to see plugin version. /sw version
+  Changed a couple nocost-related permission nodes and split 'economy.enabled' up
+  Two huge problem with permissions fixed. Sorry about that!
+
+1.2.5-R1_b2
+  Complete code restructure
+  Bug fixes, cleaner code, better message formatting
+
+1.2.5-R1_b1
+  CB 1.2.5 R1
+  Initial release

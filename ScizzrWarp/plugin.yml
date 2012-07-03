@@ -1,0 +1,155 @@
+name: ScizzrWarp
+version: 1.2.5-R4_b1
+main: com.scizzr.bukkit.plugins.scizzrwarp.Main
+authors:
+  - Scizzr
+softdepend:
+  - Vault
+commands:
+  home:
+    description: Go home
+    usage:
+      /home [<name>]                    | Teleport to a home you have set
+  sethome:
+    description: Set home
+      /sethome [p:<who>] [<name>]       | Set a home; without <name> sets default
+  delhome:
+    description: Delete home
+      /delhome [<name>]                 | Delete a home; without <name> clears default
+  homes:
+    description: List homes
+      /homes                            | List homes you have set
+  warp:
+    description: Use a warp
+    usage:
+      /warp [<name>]                    | Teleport to a home you have set
+  setwarp:
+    description: Set a warp
+      /setwarp [p:<who>] [<name>]       | Set a home; without <name> sets default
+  delwarp:
+    description: Delete a warp
+      /delwarp                          | Delete a warp
+  warps:
+    description: List warps
+      /warps                            | List warps
+  sw:
+    description: ScizzrWarp help and administration
+      /sw help                          | Display warp commands and usage
+      /sw reload [config|homes|warps]   | Reload config, homes, or warps; if none given, reload all
+permissions:
+# Everything
+  sw.*:
+    description: Gives access to all commands and nocost
+    children:
+      sw.homes.basic.*: true
+      sw.homes.advanced.*: true
+      sw.homes.list.*: true
+      sw.homes.nocost.*: true
+      sw.warps.nocost.*: true
+      sw.admin.*: true
+# Basic Homes
+  sw.homes.basic.*:
+    children:
+      sw.homes.basic.use: true
+      sw.homes.basic.set: true
+      sw.homes.basic.del: true
+  sw.homes.basic.use:
+      description: Teleport home
+      command: "/home"
+  sw.homes.basic.set:
+      description: Set home
+      command: "/sethome"
+  sw.homes.basic.del:
+      description: Delete home
+      command: "/delhome"
+# Advanced Homes
+  sw.homes.advanced.*:
+    children:
+      sw.homes.advanced.use: true
+      sw.homes.advanced.set: true
+      sw.homes.advanced.del: true
+  sw.homes.advanced.use:
+      description: Teleport home
+      command: "/home <name>"
+  sw.homes.advanced.set:
+      description: Set home
+      command: "/sethome <name>"
+  sw.homes.advanced.del:
+      description: Delete home
+      command: "/delhome <name>"
+# All Homes
+  sw.homes.*:
+    children:
+      sw.homes.basic.*: true
+      sw.homes.advanced.*: true
+# All Warps
+  sw.warps.*:
+    children:
+      sw.warps.use: true
+      sw.warps.set: true
+      sw.warps.del: true
+  sw.warps.use:
+      description: Teleport home
+      command: "/home <name>"
+  sw.warps.set:
+      description: Set home
+      command: "/sethome <name>"
+  sw.warps.del:
+      description: Delete home
+      command: "/delhome <name>"
+# List
+  sw.list.*:
+    children:
+      sw.homes.list: true
+      sw.warps.list: true
+  # List - individual
+  sw.homes.list:
+    description: List homes
+    command: "/homes [<#>|all]"
+  sw.warps.list:
+    description: List warps
+    command: "/warps [<#>|all]"
+# No cost
+  sw.nocost.*:
+    children:
+      sw.homes.basic.nocost.*: true
+      sw.homes.advanced.nocost.*: true
+      sw.warps.nocost: true
+  # No cost - individual
+  sw.homes.basic.nocost.*:
+    children:
+      sw.homes.basic.nocost.use: true
+      sw.homes.basic.nocost.set: true
+  sw.homes.advanced.nocost.*:
+    children:
+      sw.homes.basic.nocost.use: true
+      sw.homes.basic.nocost.set: true
+  sw.warps.nocost.*:
+    children:
+      sw.warps.nocost.use: true
+      sw.warps.nocost.set: true
+# Admin
+  sw.admin.*:
+    children:
+      sw.admin.reload.*: true
+  # Admin - reload
+  sw.admin.reload.*:
+    children:
+      sw.admin.reload.config: true
+      sw.admin.reload.homes: true
+      sw.admin.reload.warps: true
+    description: Reload config, homes, and/or warps
+    command: "/homeadmin reload [config|homes|warps]"
+  sw.admin.reload.config:
+    description: Reload configuration file
+    command: "/homeadmin reload [config]"
+  sw.admin.reload.homes:
+    description: Reload homes list
+    command: "/homeadmin reload [homes]"
+  sw.admin.reload.warps:
+    description: Reload warps list
+    command: "/homeadmin reload [warps]"
+# Version Check
+  sw.newver:
+    default: false
+    description: Alert player when there is a new version
