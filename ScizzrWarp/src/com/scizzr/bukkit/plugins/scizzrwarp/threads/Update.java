@@ -36,7 +36,7 @@ public class Update implements Runnable {
     public static void check(Player p) {
         try {
             URL url = new URL(
-                String.format("http://www.scizzr.com/plugins/version.php?plug=" + Main.info.getName())
+                String.format("http://www.scizzr.com/plugins/version.php?rev=2&plug=" + Main.info.getName())
             );
             
             URLConnection conn = url.openConnection();
@@ -45,25 +45,31 @@ public class Update implements Runnable {
             String line = buff.readLine();
             
             while (line != null) {
-                String verNew = line.split("<br/>")[1];
-                String verCur = Main.info.getVersion().endsWith("+") ? Main.info.getVersion().substring(0, Main.info.getVersion().length()-1) : Main.info.getVersion();
-                if (!verNew.equalsIgnoreCase(verCur)) {
-                    if (Config.genAutoUpdate == true) {
-                        new Thread(new Update("update", p, verNew)).start();
-                    } else {
-                        if (p != null) {
-                            if (updated == true) {
-                                p.sendMessage(Main.prefix + "Version " + updver + " has been downloaded.");
-                                p.sendMessage(Main.prefix + "Reload or restart the server to finish updating.");
-                            } else {
-                                p.sendMessage(Main.prefix + "Your version of " + Main.info.getName() + " is out of date.");
-                                p.sendMessage(Main.prefix + "Version " + verNew + " can be downloaded from:");
-                                p.sendMessage(ChatColor.YELLOW + "http://www.scizzr.com/plugins/" + Main.info.getName() + ".jar");
+                String[] data = line.split("<br/>");
+                if (data.length == 2) {
+                    String updURL = data[1];
+                    String verNew = data[0];
+                    String verCur = Main.info.getVersion();
+                    if (!verNew.equalsIgnoreCase(verCur)) {
+                        if (Config.genAutoUpdate == true) {
+                            new Thread(new Update("update", p, verNew + "@" + updURL)).start();
+                        } else {
+                            if (p != null) {
+                                if (updated == true) {
+                                    p.sendMessage(Main.prefix + "Version " + updver + " has been downloaded.");
+                                    p.sendMessage(Main.prefix + "Reload or restart the server to finish updating.");
+                                } else {
+                                    p.sendMessage(Main.prefix + "Your version of " + Main.info.getName() + " is out of date.");
+                                    p.sendMessage(Main.prefix + "Version " + verNew + " can be downloaded from:");
+                                    p.sendMessage(ChatColor.YELLOW + updURL);
+                                    //Old URL
+                                    //p.sendMessage(ChatColor.YELLOW + "http://www.scizzr.com/plugins/" + Main.info.getName() + ".jar");
+                                }
                             }
                         }
                     }
+                    line = buff.readLine();
                 }
-                line = buff.readLine();
             }
             stream.close();
         } catch (Exception ex) {
@@ -71,9 +77,13 @@ public class Update implements Runnable {
         }
     }
     
-    public static void update(Player p, String ver) {
+    public static void update(Player p, String verAndUrl) {
         try {
-            String url = "http://www.scizzr.com/plugins/" + Main.info.getName() + ".jar";
+            String[] split = verAndUrl.split("@");
+            String ver = split[0];
+            //Old URL
+            //String url = "http://www.scizzr.com/plugins/" + Main.info.getName() + ".jar";
+            String url = split[1];
             
             java.io.BufferedInputStream in = new java.io.BufferedInputStream(new URL(url).openStream());
             
@@ -86,8 +96,8 @@ public class Update implements Runnable {
             byte[] data = new byte[1024];
             int x=0;
             
-            while((x=in.read(data,0,1024))>=0) {
-                bout.write(data,0,x);
+            while((x=in.read(data, 0, 1024))>=0) {
+                bout.write(data, 0, x);
             }
             
             bout.close();

@@ -1,5 +1,9 @@
 Changelog for anyone bored enough to open my jar. :-)
 
+1.2.5-R4_b2
+  Altered URL in update downloader to use Bukkit's site instead of mine
+    This will mean that all updates must be approved before you can auto-update
+
 1.2.5-R4_b1
   CB 1.2.5 R4
   Fixed error submissions. (GET string in URL was too long; using POST now)
