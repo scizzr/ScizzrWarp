@@ -1,5 +1,9 @@
 Changelog for anyone bored enough to open my jar. :-)
 
+1.2.5-R4_b4
+  Fixed slight logic error in automatic updater.
+    Should now notify you when an update has been automatically downloaded.
+
 1.2.5-R4_b3
   Once again altered URL in update downloader to use Bukkit's site instead of mine
     Sorry for any inconveniences this has caused (repeated updates over the last week)

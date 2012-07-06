@@ -10,6 +10,7 @@ import java.net.URLConnection;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.scizzr.bukkit.plugins.scizzrwarp.threads.Update;
 import com.scizzr.bukkit.plugins.scizzrwarp.Main;
 import com.scizzr.bukkit.plugins.scizzrwarp.config.Config;
 
@@ -52,19 +53,19 @@ public class Update implements Runnable {
                     String verCur = Main.info.getVersion();
                     if (!verNew.equalsIgnoreCase(verCur)) {
                         if (Config.genAutoUpdate == true) {
-                            new Thread(new Update("update", p, verNew + "@" + updURL)).start();
+                            if (updated == false) {
+                                new Thread(new Update("update", p, verNew + "@" + updURL)).start();
+                            } else {
+                                p.sendMessage(Main.prefix + "Version " + updver + " has been downloaded.");
+                                p.sendMessage(Main.prefix + "Reload or restart the server to finish updating.");
+                            }
                         } else {
                             if (p != null) {
-                                if (updated == true) {
-                                    p.sendMessage(Main.prefix + "Version " + updver + " has been downloaded.");
-                                    p.sendMessage(Main.prefix + "Reload or restart the server to finish updating.");
-                                } else {
-                                    p.sendMessage(Main.prefix + "Your version of " + Main.info.getName() + " is out of date.");
-                                    p.sendMessage(Main.prefix + "Version " + verNew + " can be downloaded from:");
-                                    p.sendMessage(ChatColor.YELLOW + "http://dev.bukkit.org" + updURL);
-                                    //Old URL
-                                    //p.sendMessage(ChatColor.YELLOW + "http://www.scizzr.com/plugins/" + Main.info.getName() + ".jar");
-                                }
+                                p.sendMessage(Main.prefix + "Your version of " + Main.info.getName() + " is out of date.");
+                                p.sendMessage(Main.prefix + "Version " + verNew + " can be downloaded from:");
+                                p.sendMessage(ChatColor.YELLOW + "http://dev.bukkit.org" + updURL);
+                                //Old URL
+                                //p.sendMessage(ChatColor.YELLOW + "http://www.scizzr.com/plugins/" + Main.info.getName() + ".jar");
                             }
                         }
                     }
