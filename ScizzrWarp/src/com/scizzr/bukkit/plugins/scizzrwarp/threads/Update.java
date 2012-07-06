@@ -36,7 +36,7 @@ public class Update implements Runnable {
     public static void check(Player p) {
         try {
             URL url = new URL(
-                String.format("http://www.scizzr.com/plugins/version.php?rev=2&plug=" + Main.info.getName())
+                String.format("http://www.scizzr.com/plugins/version.php?rev=3&plug=" + Main.info.getName())
             );
             
             URLConnection conn = url.openConnection();
@@ -61,7 +61,7 @@ public class Update implements Runnable {
                                 } else {
                                     p.sendMessage(Main.prefix + "Your version of " + Main.info.getName() + " is out of date.");
                                     p.sendMessage(Main.prefix + "Version " + verNew + " can be downloaded from:");
-                                    p.sendMessage(ChatColor.YELLOW + updURL);
+                                    p.sendMessage(ChatColor.YELLOW + "http://dev.bukkit.org" + updURL);
                                     //Old URL
                                     //p.sendMessage(ChatColor.YELLOW + "http://www.scizzr.com/plugins/" + Main.info.getName() + ".jar");
                                 }
@@ -81,9 +81,11 @@ public class Update implements Runnable {
         try {
             String[] split = verAndUrl.split("@");
             String ver = split[0];
-            //Old URL
+            //Old URL 1
             //String url = "http://www.scizzr.com/plugins/" + Main.info.getName() + ".jar";
-            String url = split[1];
+            //Old URL 2
+            //String url = split[1];
+            String url = "http://dev.bukkit.org" + split[1];
             
             java.io.BufferedInputStream in = new java.io.BufferedInputStream(new URL(url).openStream());
             
